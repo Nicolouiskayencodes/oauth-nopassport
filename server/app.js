@@ -37,8 +37,9 @@ app.get('/api/auth/github', async (req, res)=>{
     throw ('no code')
   }
   const user = await getGithubUser(code)
-  console.log(user)
-  res.json(user)
+  const userstring = JSON.stringify(user)
+  // would send user jwt in real scenario
+  res.redirect('http://localhost:5174' + path + '?'+ userstring)
 
 })
 
