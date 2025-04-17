@@ -19,14 +19,11 @@ async function getGithubUser (code){
     throw error
   })
   console.log(accesstoken)
-  await fetch('https://api.github.com/user', {
+  return await fetch('https://api.github.com/user', {
     headers: {Authorization: `Bearer ${accesstoken}`}
   })
   .then(response => {
-    return response.text()
-  })
-  .then(response => {
-    console.log(response)
+    return response.json()
   })
 
 }
@@ -39,7 +36,9 @@ app.get('/api/auth/github', async (req, res)=>{
   if (!code){
     throw ('no code')
   }
-  await getGithubUser(code)
+  const user = await getGithubUser(code)
+  console.log(user)
+  res.json(user)
 
 })
 
